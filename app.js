@@ -2,11 +2,12 @@
 
 console.log('js linked!');
 
-// var imageElements = document.getElementsByTagName('img');
+// var imageElements = document.getElementsByTagName('image-elements');
 var left = document.getElementById('left');
 var middle = document.getElementById('middle');
 var right = document.getElementById('right');
 var imageHolder = document.getElementById('image-holder');
+var totalClicks = -1;
 
 var allProducts = [];
 
@@ -14,6 +15,7 @@ function Product(name, imageUrl) {
   this.name = name;
   this.imageUrl = imageUrl;
   this.timesClicked = 0;
+  this.imageViews = 0;
   allProducts.push(this);
 
 }
@@ -42,8 +44,6 @@ new Product('usb', 'img/usb.gif');
 new Product('water-can', 'img/water-can.jpg');
 new Product('wine-glass', 'img/wine-glass.jpg');
 
-console.log(allProducts);
-
 function displayImages (){
   var displayedImages = [];
   displayedImages[0] = getRandomIndex();
@@ -58,9 +58,30 @@ function displayImages (){
     displayedImages[2] = getRandomIndex();
   }
 
-  left.src = allProducts[displayedImages[0]].imageUrl;
-  middle.src = allProducts[displayedImages[1]].imageUrl;
-  right.src = allProducts[displayedImages[2]].imageUrl;
+  left.src = allProducts[displayedImages[0]].imageUrl; allProducts[displayedImages[0]].imageViews++;
+
+  middle.src = allProducts[displayedImages[1]].imageUrl; allProducts[displayedImages[1]].imageViews++;
+
+  right.src = allProducts[displayedImages[2]].imageUrl; allProducts[displayedImages[2]].imageViews++;
+
+  totalClicks = totalClicks + 1;
+
+  console.log(totalClicks);
+  if(totalClicks >= 25) {
+
+    console.log('Clicks done');
+    var footerEl = document.getElementsByTagName('footer')[0];
+    footerEl.textContent ='No more Chance';
+
+    // for(var i = 0; i < allProducts.length; i++ ){
+    //   allProducts[i].removeEventListener ('click', handleClick);
+    // }
+    imageHolder.removeEventListener('click', handleClick);
+
+    makeList();
+  }
+
+
 }
 displayImages();
 
@@ -71,15 +92,16 @@ function getRandomIndex() {
   return randomIndex;
 }
 
+
 function handleClick(event) {
-  console.log('pic was clicked');
   if (event.target.id === 'image-holder'){
-    alert('please click an image');
+    // alert('please click an image');
   }
+
   for( var i = 0; i < allProducts.length; i++ ) {
     if (event.srcElement.src.endsWith(allProducts[i] .imageUrl)){
       allProducts[i].timesClicked++;
-      console.log(event.srcElement.src, allProducts[i].timesClicked, allProducts[i].name);
+      //console.log(event.srcElement.src, allProducts[i].timesClicked, allProducts[i].name);
 
     }
   }
@@ -88,14 +110,14 @@ function handleClick(event) {
 }
 
 
-
-
-var totalClicks = 0;
-
-if(totalClicks >= 25) {
-
-  console.log(totalClicks);
-}
-
-
 imageHolder.addEventListener('click', handleClick);
+
+
+function makeList() {
+  var listContainer = document.getElementsByTagName('ul')[0];
+  for(var i = 0; i < allProducts.length; i++) {
+    var listItem = document.createElement('li');
+    listItem.textContent =`${allProducts[i].name}: ${allProducts[i].timesClicked} vote ${allProducts[i].imageViews} views.`;
+    listContainer.appendChild(listItem);
+  }
+}

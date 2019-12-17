@@ -1,18 +1,32 @@
 
 h1 {
   color: orange;
+  float: left;
 }
 
 
-img {
+#logo {
   width: 100px;
+  margin-left: 100px;
 }
 
 #left {
   margin: 20px 30px;
-
+  box-sizing: 20px;
+  width: 100px;
 }
+
+#middle {
+  margin: 5px 10px;
+  width: 100px;
+}
+
 
 #right {
   margin: 20px 30px;
+  width: 100px;
+}
+
+#result{
+  max-width: 500px;
 }

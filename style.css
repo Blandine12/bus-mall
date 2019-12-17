@@ -1,9 +1,18 @@
-#logo{
-  
-  float: left;
+
+h1 {
+  color: orange;
 }
 
 
 img {
   width: 100px;
+}
+
+#left {
+  margin: 20px 30px;
+
+}
+
+#right {
+  margin: 20px 30px;
 }

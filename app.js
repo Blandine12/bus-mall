@@ -84,46 +84,18 @@ function handleClick(event) {
     }
   }
 
-
-
-
-
-
-
-
-
-
-
-
-
   displayImages();
 }
 
+
+
+
+var totalClicks = 0;
+
+if(totalClicks >= 25) {
+
+  console.log(totalClicks);
+}
+
+
 imageHolder.addEventListener('click', handleClick);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// if(totalClicks >=25) {
-//   var footerEl = document.getElementsByTagName('footer')[0];
-//   footerEl.textContent = 'You picked';
-// }
-
-

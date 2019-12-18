@@ -27,11 +27,13 @@ function productNameArray() {
   }
   return answer;
 }
+
+
 function getRandomColor() {
   var letters = '0123456789ABCDEF';
   var color = '#';
   for (var i = 0; i < 6; i++) {
-    color += letters[Math.floor(Math.random() * 20)];
+    color += letters[Math.floor(Math.random() * 16)];
   }
   return color;
 }
@@ -44,8 +46,13 @@ function numberOfViews() {
   return answer;
 }
 
-
-
+function numberOfVotes() {
+  var answer = [];
+  for(var i = 0; i < allProducts.length; i++) {
+    answer[i] = allProducts[i]. timesClicked++;
+  }
+  return answer;
+}
 
 
 new Product('bag', 'img/bag.jpg');
@@ -93,15 +100,10 @@ function displayImages (){
 
   console.log(totalClicks);
   if(totalClicks >= 25) {
-
     // console.log('Clicks done');
     // var footerEl = document.getElementsByTagName('footer')[0];
     // footerEl.textContent ='No more Chance';
-
-    // for(var i = 0; i < allProducts.length; i++ ){
-    //   allProducts[i].removeEventListener ('click', handleClick);
-    // }
-    // imageHolder.removeEventListener('click', handleClick);
+    imageHolder.removeEventListener('click', handleClick);
 
     makeList();
     renderChart();
@@ -122,15 +124,14 @@ function handleClick(event) {
     // alert('please click an image');
   }
 
-  for( var i = 0; i < allProducts.length; i++ ) {
-    if (event.srcElement.src.endsWith(allProducts[i] .imageUrl)){
-      allProducts[i].timesClicked++;
-      //console.log(event.srcElement.src, allProducts[i].timesClicked, allProducts[i].name);
-
-    }
+  if(event.srcElement.src){
+    for( var i = 0; i < allProducts.length; i++ ) {
+      if (event.srcElement.src.endsWith(allProducts[i] .imageUrl)){
+        allProducts[i].timesClicked++;
+        //console.log(event.srcElement.src, allProducts[i].timesClicked, allProducts[i].name);
+      }
+    } displayImages();
   }
-
-  displayImages();
 }
 
 
@@ -154,13 +155,17 @@ function renderChart(){
     data: {
       labels: productNameArray(),
       datasets: [{
-        label: '# of Votes',
+        label: '# of Views',
         data: numberOfViews(),
         backgroundColor: getRandomColor(),
-
-        borderColor: getRandomColor(),
-        borderWidth: 1
-      }]
+      },
+      {
+        label: '# of votes',
+        data: numberOfVotes(),
+        backgroundColor: getRandomColor(),
+        borderWidth: 1,
+      },
+      ]
     },
     options: {
       scales: {

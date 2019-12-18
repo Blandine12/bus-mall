@@ -20,6 +20,31 @@ function Product(name, imageUrl) {
 
 }
 
+function productNameArray() {
+  var answer = [];
+  for(var i = 0; i < allProducts.length; i++) {
+    answer[i] = allProducts[i].name;
+  }
+  return answer;
+}
+function getRandomColor() {
+  var letters = '0123456789ABCDEF';
+  var color = '#';
+  for (var i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 20)];
+  }
+  return color;
+}
+
+function numberOfViews() {
+  var answer =[];
+  for(var i = 0; i < allProducts.length; i++) {
+    answer[i] = allProducts[i]. imageViews++;
+  }
+  return answer;
+}
+
+
 
 
 
@@ -69,19 +94,18 @@ function displayImages (){
   console.log(totalClicks);
   if(totalClicks >= 25) {
 
-    console.log('Clicks done');
-    var footerEl = document.getElementsByTagName('footer')[0];
-    footerEl.textContent ='No more Chance';
+    // console.log('Clicks done');
+    // var footerEl = document.getElementsByTagName('footer')[0];
+    // footerEl.textContent ='No more Chance';
 
     // for(var i = 0; i < allProducts.length; i++ ){
     //   allProducts[i].removeEventListener ('click', handleClick);
     // }
-    imageHolder.removeEventListener('click', handleClick);
+    // imageHolder.removeEventListener('click', handleClick);
 
     makeList();
+    renderChart();
   }
-
-
 }
 displayImages();
 
@@ -120,4 +144,32 @@ function makeList() {
     listItem.textContent =`${allProducts[i].name}: ${allProducts[i].timesClicked} vote ${allProducts[i].imageViews} views.`;
     listContainer.appendChild(listItem);
   }
+}
+
+function renderChart(){
+  var ctx = document.getElementById('myChart').getContext('2d');
+  // eslint-disable-next-line no-undef
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: productNameArray(),
+      datasets: [{
+        label: '# of Votes',
+        data: numberOfViews(),
+        backgroundColor: getRandomColor(),
+
+        borderColor: getRandomColor(),
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero: true
+          }
+        }]
+      }
+    }
+  });
 }

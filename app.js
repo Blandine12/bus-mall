@@ -39,6 +39,7 @@ function productNameArray() {
   return answer;
 }
 
+// https://www.w3schools.com/jsref/jsref_random
 function getRandomColor() {
   var letters = '0123456789ABCDEF';
   var color = '#';
@@ -105,22 +106,44 @@ else{
 for (let i = 0; i < 3; i++) {
   allProducts[i].imageViews++;
 }
+// generate a random index num
+function getRandomIndex() {
+  return Math.floor(Math.random() * allProducts.length);
+}
+
+// function displayImages (){
+// var displayedImages = [];
+// var previousSet = [];
+
+// var randomIndex = getRandomIndex();
+
+// displayedImages.push(randomIndex);
+
+// while(displayedImages.length < 3) {
+
+//   while(displayedImages.includes(randomIndex) || previousSet.includes(randomIndex)){
+//     randomIndex = getRandomIndex();
+//   }
+//   displayedImages.push(randomIndex);
+// }
+// console.log(displayedImages);
+// console.log(previousSet);
+
+// previousSet = displayedImages;
+// displayedImages = [];
+
 
 function displayImages (){
   var displayedImages = [];
   displayedImages[0] = getRandomIndex();
   displayedImages[1] = getRandomIndex();
-  // displayedImages[2] = getRandomIndex();
+
 
   while(displayedImages[0] === displayedImages[1]) {
     displayedImages[1] = getRandomIndex();
-    // displayedImages[2] = getRandomIndex();
+
   }
 
-  // displayedImages[1] = getRandomIndex();
-  // while (displayedImages[0] === displayedImages[1] || displayedImages[2] === displayedImages[1]) {
-  //   displayedImages[1] = getRandomIndex();
-  // }
 
   displayedImages[2] = getRandomIndex();
   while (displayedImages[0] === displayedImages[2] || displayedImages[1] === displayedImages[2]) {
@@ -151,11 +174,6 @@ function displayImages (){
 }
 displayImages();
 
-// generate a random index num
-function getRandomIndex() {
-  var randomIndex = Math.floor(Math.random() * allProducts.length);
-  return randomIndex;
-}
 
 function handleClick(event) {
   if (event.target.id === 'image-holder'){
@@ -164,11 +182,13 @@ function handleClick(event) {
 
   if(event.srcElement.src){
     for( var i = 0; i < allProducts.length; i++ ) {
-      if (event.srcElement.src.endsWith(allProducts[i] .imageUrl)){
+      if (event.srcElement.src.endsWith(allProducts[i].imageUrl)){
         allProducts[i].timesClicked++;
         //console.log(event.srcElement.src, allProducts[i].timesClicked, allProducts[i].name);
       }
-    } displayImages();
+    }
+
+    displayImages();
   }
 }
 

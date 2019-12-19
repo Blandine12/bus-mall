@@ -14,21 +14,24 @@ h1 {
 
 #left {
   float: left;
-  width: 80px;
+  width: 180px;
   padding: 50px;
+  border-radius: 30%;
 }
 
 #middle {
   float: left;
-  width: 80px;
+  width: 180px;
   padding: 50px;
+  border-radius: 30%;
 }
 
 
 #right {
   float: left;
-  width: 80px;
+  width: 180px;
   padding: 50px;
+  border-radius: 30%;
 }
 
 #image-holder {
@@ -39,8 +42,15 @@ h1 {
 
 #result{
   max-width: 500px;
+  color: #0026ff
 }
 
 footer{
   width: 500px;
+}
+
+ 
+
+body {
+  background-color: peachpuff;
 }

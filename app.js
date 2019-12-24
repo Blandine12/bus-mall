@@ -52,7 +52,7 @@ function getRandomColor() {
 function numberOfViews() {
   var answer =[];
   for(var i = 0; i < allProducts.length; i++) {
-    answer[i] = allProducts[i]. imageViews++;
+    answer[i] = allProducts[i]. imageViews;
   }
   return answer;
 }
@@ -60,7 +60,7 @@ function numberOfViews() {
 function numberOfVotes() {
   var answer = [];
   for(var i = 0; i < allProducts.length; i++) {
-    answer[i] = allProducts[i]. timesClicked++;
+    answer[i] = allProducts[i]. timesClicked;
   }
   return answer;
 }
@@ -76,7 +76,8 @@ if (productString) {
   for(var i = 0; i < productArray.length; i++) {
     console.log('good');
 
-    new Product(productArray[i].name,productArray[i].imageUrl, productArray[i].imageViews, productArray[i].timesClicked);
+    new Product(productArray[i].name,productArray[i].imageUrl,
+      productArray[i].timesClicked, productArray[i].imageViews);
   }
 }
 else{
@@ -103,58 +104,13 @@ else{
 }
 
 
-for (let i = 0; i < 3; i++) {
-  allProducts[i].imageViews++;
-}
 // generate a random index num
 function getRandomIndex() {
   return Math.floor(Math.random() * allProducts.length);
 }
 
-// function displayImages (){
-// var displayedImages = [];
-// var previousSet = [];
-
-// var randomIndex = getRandomIndex();
-
-// displayedImages.push(randomIndex);
-
-// while(displayedImages.length < 3) {
-
-//   while(displayedImages.includes(randomIndex) || previousSet.includes(randomIndex)){
-//     randomIndex = getRandomIndex();
-//   }
-//   displayedImages.push(randomIndex);
-// }
-// console.log(displayedImages);
-// console.log(previousSet);
-
-// previousSet = displayedImages;
-// displayedImages = [];
-
-
+var previouslyDisplayed = [];
 function displayImages (){
-  var displayedImages = [];
-  displayedImages[0] = getRandomIndex();
-  displayedImages[1] = getRandomIndex();
-
-
-  while(displayedImages[0] === displayedImages[1]) {
-    displayedImages[1] = getRandomIndex();
-
-  }
-
-
-  displayedImages[2] = getRandomIndex();
-  while (displayedImages[0] === displayedImages[2] || displayedImages[1] === displayedImages[2]) {
-    displayedImages[2] = getRandomIndex();
-  }
-
-  left.src = allProducts[displayedImages[0]].imageUrl; allProducts[displayedImages[0]].imageViews++;
-
-  middle.src = allProducts[displayedImages[1]].imageUrl; allProducts[displayedImages[1]].imageViews++;
-
-  right.src = allProducts[displayedImages[2]].imageUrl; allProducts[displayedImages[2]].imageViews++;
 
   totalClicks = totalClicks + 1;
 
@@ -163,17 +119,37 @@ function displayImages (){
 
     var stringifyAllProducts = JSON.stringify(allProducts);
     localStorage.setItem('localProduct', stringifyAllProducts);
-    // console.log('Clicks done');
-    // var footerEl = document.getElementsByTagName('footer')[0];
-    // footerEl.textContent ='No more Chance';
+
     imageHolder.removeEventListener('click', handleClick);
 
     makeList();
     renderChart();
   }
+  else {
+    var aboutToDisplay = [];
+
+    for (var i =0; i < 3; i++) {
+      var nextImageIndex = getRandomIndex();
+      while(previouslyDisplayed.includes(nextImageIndex) ||aboutToDisplay.includes(nextImageIndex)){
+        nextImageIndex = getRandomIndex();
+      }
+      aboutToDisplay[i] = nextImageIndex;
+    }
+
+    left.src = allProducts[aboutToDisplay[0]].imageUrl;
+    allProducts[aboutToDisplay[0]].imageViews++;
+
+    middle.src = allProducts[aboutToDisplay[1]].imageUrl;
+    allProducts[aboutToDisplay[1]].imageViews++;
+
+    right.src = allProducts[aboutToDisplay[2]].imageUrl;
+    allProducts[aboutToDisplay[2]].imageViews++;
+
+    previouslyDisplayed = aboutToDisplay;
+  }
+
 }
 displayImages();
-
 
 function handleClick(event) {
   if (event.target.id === 'image-holder'){
@@ -191,7 +167,6 @@ function handleClick(event) {
     displayImages();
   }
 }
-
 
 imageHolder.addEventListener('click', handleClick);
 
